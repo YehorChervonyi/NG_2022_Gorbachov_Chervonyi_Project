@@ -1,0 +1,1 @@
+# NG_2022_Gorbachov_Chervonyi_Project

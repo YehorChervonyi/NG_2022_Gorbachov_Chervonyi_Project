@@ -1,0 +1,22 @@
+@import "https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css";
+.input:focus> .fa {
+    color: aqua;
+}
+.block {
+    margin-top: 25vh;
+}
+.input {
+    border: 0px;
+    color: #f5f5f5;
+}
+.input::placeholder {
+    color: rgba(255, 255, 255, 0.35);
+}
+.label {
+    padding-left: 1vw;
+}
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

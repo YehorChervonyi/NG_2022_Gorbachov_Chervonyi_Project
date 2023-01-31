@@ -5,48 +5,67 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/static/styles/main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 
     <title>Sign up</title>
 </head>
 <body>
-    <div class="block " style="margin-top: 25vh;">
-        <form class="box has-background-grey-dark column is-4 is-offset-4">
+    <div class="block ">
+        <form class="box column is-4 is-offset-4" name="signup">
+            <div class="notification is-warning  is-light is-hidden" id="notif">
+              <button onclick="return closenotif()" class="delete"></button>
+              <label class="is-size-6" for="name" id="nameerror"></label>
+            </div>
             <div class="field">
-                <label class="label has-text-white-ter">Name</label>
-                <div class="control has-icons-left">
-                    
-                  <input class="input has-background-black-ter is-rounded " type="text" placeholder="e.g Alex Smith">
+                <label class="label ">Name</label>
+
+                <div class="control has-icons-left">  
+                  <input class="input is-rounded " type="text" placeholder="e.g Alex Smith" name="name" id="name">
+
                   <span class="icon is-small is-left">
                     <i class="fa fa-user" aria-hidden="true"></i>
                   </span>
+
+                  
                 </div>
               </div>
               
               <div class="field">
-                <label class="label has-text-white-ter">Email</label>
+                <label class="label ">Email</label>
+
                 <div class="control has-icons-left">
-                  <input class="input has-background-black-ter is-rounded" type="email" placeholder="e.g. alexsmith@gmail.com">
+                  <input class="input is-rounded" type="email" placeholder="e.g. alexsmith@gmail.com" name="email" id="email">
                   <span class="icon is-small is-left">
                     <i class="fa fa-envelope" aria-hidden="true"></i>
                   </span>
                 </div>
               </div>
               <div class="field">
-                <label class="label has-text-white-ter">Password</label>
+                <label class="label ">Password</label>
                 <div class="control has-icons-left">
-                    <input class="input has-background-black-ter is-rounded" type="password" name="password" placeholder="********">
-                    <span class="icon is-small is-left">
+                  <input class="input is-rounded" type="password" name="password" placeholder="********" id="pass" >
+                  <span class="icon is-small is-left">
                     <i class="fa fa-key" aria-hidden="true"></i>
-                    </span>
+                  </span>
+                  <label class="label" for="pass" id="passerror"></label>
                 </div>
-                </div>
+              </div>
+              <div class="field">
+                <label class="label ">Confirm password</label>
+                <div class="control has-icons-left">
+                  <input class="input is-rounded" type="password" name="confirm" placeholder="********" id="passconf" >
+                  <span class="icon is-small is-left">
+                    <i class="fa fa-key" aria-hidden="true"></i>
+                  </span>
+                  <label class="label" for="passconf" id="passconferror"></label>
+                  </div>
+                  </div>
             <div class="buttons">
                 <p class="control">
-                  <a class="button is-dark">Sign up</a>
+                  <button form="signup" onclick="return validateForm()" method="post"  class="button is-primary">Sign up</button>
                 </p>
                 <p class="control">
-                    <a form="" onclick="window.location.href='/login'" class="button is-light">Log in</a>
+                    <button form="" onclick="window.location.href='/login'" class="button is-primary is-light">Log in</button>
                   </p>
               </div>
 
@@ -54,3 +73,11 @@
     </div>
 </body>
 </html>
+<style>
+  .block {
+      margin-top: 25vh;
+  }
+  .notification{
+    margin-top: 1vh;
+  }
+</style>

@@ -5,32 +5,39 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/static/styles/main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 
     <title>Login</title>
 </head>
 <body>
     <div class="block ">
-        <form class="box has-background-grey-dark column is-4 is-offset-4">
+        <form class="box column is-4 is-offset-4">
             <div class="field">
-            <label class="label has-text-white-ter">Email</label>
+            <label class="label">Email</label>
             <div class="control">
-                <input class="input has-background-black-ter is-rounded" type="email" name="email" placeholder="e.g. name@example.com">
+                <input class="input is-rounded" type="email" name="email" placeholder="e.g. name@example.com">
             </div>
             </div>
         
             <div class="field">
-            <label class="label has-text-white-ter">Password</label>
+            <label class="label">Password</label>
             <div class="control">
-                <input class="input has-background-black-ter is-rounded" type="password" name="password" placeholder="********">
+                <input class="input is-rounded" type="password" name="password" placeholder="********">
             </div>
             </div>
             <div class="buttons">
-            <button formaction="/login" class="button is-dark "><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Log in</button>
-            <button form="" onclick="window.location.href='/signup'" class="button is-light ">Sign in</button>
+            <button formaction="/login" class="button is-primary "><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Log in</button>
+            <button form="" onclick="window.location.href='/signup'" class="button is-primary is-light ">Sign in</button>
             </div>
         </form>
     </div>
     
 </body>
 </html>
+
+<style>
+
+    .block {
+        margin-top: 25vh;
+    }
+</style>

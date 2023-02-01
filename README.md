@@ -6,8 +6,10 @@
 - [x] Login template
 - [x] Sign in template
 ### Stage II
-- [ ] Database creation
-- [ ] Reginstration
+- [x] Database creation
+- [x] Reginstration
+- [x] Login
+- [x] Logout
 ### Stage III
 - [ ] Main template
 

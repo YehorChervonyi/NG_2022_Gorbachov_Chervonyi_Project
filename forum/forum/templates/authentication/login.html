@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"class="has-background-black-ter">
+<html lang="en" class="has-background-black-ter">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,11 +11,12 @@
 </head>
 <body>
     <div class="block ">
-        <form class="box column is-4 is-offset-4">
+        <form method="post" action="" class="box column is-4 is-offset-4">
+            {% csrf_token %}
             <div class="field">
-            <label class="label">Email</label>
+            <label class="label">Username</label>
             <div class="control">
-                <input class="input is-rounded" type="email" name="email" placeholder="e.g. name@example.com">
+                <input class="input is-rounded" type="text" name="username" placeholder="yanikitalalala">
             </div>
             </div>
         
@@ -26,7 +27,7 @@
             </div>
             </div>
             <div class="buttons">
-            <button formaction="/login" class="button is-primary "><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Log in</button>
+            <button class="button is-primary "><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Log in</button>
             <button form="" onclick="window.location.href='/signup'" class="button is-primary is-light ">Sign in</button>
             </div>
         </form>

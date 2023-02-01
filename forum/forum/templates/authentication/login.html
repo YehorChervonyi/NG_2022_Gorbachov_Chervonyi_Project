@@ -1,44 +1,37 @@
-<!DOCTYPE html>
-<html lang="en" class="has-background-black-ter">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-
-    <title>Login</title>
-</head>
-<body>
-    <div class="block ">
-        <form method="post" action="" class="box column is-4 is-offset-4">
-            {% csrf_token %}
-            <div class="field">
-            <label class="label">Username</label>
-            <div class="control">
-                <input class="input is-rounded" type="text" name="username" placeholder="yanikitalalala">
-            </div>
-            </div>
-        
-            <div class="field">
-            <label class="label">Password</label>
-            <div class="control">
-                <input class="input is-rounded" type="password" name="password" placeholder="********">
-            </div>
-            </div>
-            <div class="buttons">
-            <button class="button is-primary "><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Log in</button>
-            <button form="" onclick="window.location.href='/signup'" class="button is-primary is-light ">Sign in</button>
-            </div>
-        </form>
+{% extends 'authentication/layout.html' %}
+{% block title %}Log in{% endblock %}
+{% block body %}
+<div class="container  ">
+    <div class="row align-items-center">
+        <div class="col">
+        </div>
+        <div class="col">
+        <form method="post"> 
+            {% csrf_token %}  
+        <div class="form-floating mb-3">
+            <input type="text" name="username" class="form-control" id="floatingInput" placeholder="name@example.com">
+            <label for="floatingInput">Username</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <label for="floatingPassword">Password</label>
+          </div>
+    <button onclick="return toast()" class="btn btn-primary"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Log in</button>
+  </form>
+      </div>
+      <div class="col">
+      </div>
     </div>
-    
-</body>
-</html>
-
-<style>
-
-    .block {
+  </div>
+  <style>
+    .container{
         margin-top: 25vh;
     }
-</style>
+  </style>
+  <script>
+    alert = document.getElementById('alert')
+    function closenotif(){
+        alert.classList.add("visually-hidden")
+    }
+  </script>
+{% endblock %}

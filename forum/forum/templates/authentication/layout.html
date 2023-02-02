@@ -47,8 +47,8 @@
               <button class="btn btn-outline-success me-md-5" type="submit">Search</button>
             </form>
             {% if user.is_authenticated%}
-            <h5 class="me-md-2">{{user.get_username }}</h5>
-              <button onclick="window.location.href='/logout'" class="btn btn-primary" type="button">Log out&nbsp;<i class="fa fa-sign-out" aria-hidden="true"></i></button>
+            <p class="me-md-2">{{user.get_username }}</p>
+            <button onclick="window.location.href='/logout'" class="btn btn-primary" type="button">Log out&nbsp;<i class="fa fa-sign-out" aria-hidden="true"></i></button>
             {% else %}
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
               <button onclick="window.location.href='/signup'" class="btn btn-primary " type="button"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Sign up</button>
@@ -59,10 +59,10 @@
         </div>
       </nav>  
       {% for message in messages %}
-<div {% if message.tags %} class="alert alert-{{ message.tags }} alert-dismissible fade show w-25 mx-auto"{% endif %} role="alert"  >
-    {{message}}&nbsp;
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="return closenotif()"></button>
-  </div>
+        <div {% if message.tags %} class="alert alert-{{ message.tags }} alert-dismissible fade show w-25 mx-auto position-absolute top-5 start-50 translate-middle-x"{% endif %} role="alert"  >
+          {{message}}&nbsp;
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="return closenotif()"></button>
+        </div>
   {% endfor %}
     {% block body %}
     {% endblock %}

@@ -1,33 +1,33 @@
-from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
-from . forms import RegisterUserForm
-from django.contrib.auth.models import User
-
+from . forms import RegisterUserForm , User
 
 # Create your views here.
 def home_page(request):
     return render(request, 'authentication/main.html')
 
-
 # This function logging user to his account.
 def login_user(request):
     if request.method == "POST":
-        username = request.POST['username'].strip()
+        email = request.POST['email'].strip()
         password = request.POST['password'].strip()
         # username = User.objects.get(email=email.lower()).username
-        user = authenticate(request, username=username, password=password)
+        try:
+            get_user = User.objects.get(email=email)
+        except:
+            get_user = None
+
+        user = authenticate(request, username=get_user, password=password)
 
         if user is not None:
             login(request, user)
             return redirect('home')
         else:
-            if username == "" and password == "":
-                messages.warning(request, "Username and Password text areas are empty")
-            elif username == "":
-                messages.warning(request, "Username text area is empty")
+            if email == "" and password == "":
+                messages.warning(request, "Email and Password text areas are empty")
+            elif email == "":
+                messages.warning(request, "Email text area is empty")
             elif password == "":
                 messages.warning(request, "Password text area is empty")
             else:

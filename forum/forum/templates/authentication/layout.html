@@ -44,17 +44,22 @@
             </ul>
             <form class="d-flex" role="search">
               <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success me-md-5" type="submit">Search</button>
+              <button class="btn btn-outline-success me-md-3" type="submit">Search</button>
             </form>
-            {% if user.is_authenticated%}
-            <p class="me-md-2">{{user.get_username }}</p>
-            <button onclick="window.location.href='/logout'" class="btn btn-primary" type="button">Log out&nbsp;<i class="fa fa-sign-out" aria-hidden="true"></i></button>
-            {% else %}
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-              <button onclick="window.location.href='/signup'" class="btn btn-primary " type="button"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Sign up</button>
-              <button onclick="window.location.href='/login'" class="btn btn-primary " type="button"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Log in</button>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end align-items-center">
+              {% if user.is_authenticated%}
+                {{user.get_username }}
+              {% if user.is_superuser %}
+              <button onclick="window.location.href='/admin'" class="btn btn-primary" type="button"><i class="fa fa-cog" aria-hidden="true"></i></button>
+              {% endif %}
+              <button onclick="window.location.href='/logout'" class="btn btn-primary" type="button"><i class="fa fa-sign-out" aria-hidden="true"></i></button>
+              {% else %}
+              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button onclick="window.location.href='/signup'" class="btn btn-primary " type="button"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Sign up</button>
+                <button onclick="window.location.href='/login'" class="btn btn-primary " type="button"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Log in</button>
+              </div>
+              {% endif %}
             </div>
-            {% endif %}
           </div>
         </div>
       </nav>  

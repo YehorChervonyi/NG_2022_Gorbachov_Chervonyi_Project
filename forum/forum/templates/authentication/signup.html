@@ -3,35 +3,61 @@
 {% block body %}
 <div class="container">
   <div class="row align-items-center">
+    <div class="col"></div>
     <div class="col">
-    </div>
-    <div class="col">
-      <div>
-          <form method="post" action="">
-              {% csrf_token %}
-              <!-- {% for message in messages %}
-                <div class="notification is-warning" {% if message.tags %} class="{{ message.tags }}"{% endif %}>
-                  <button class="delete"></button>
-                  {{ message }}
-                </div>
-              {% endfor %} -->
-              {{form.as_p}}
-
-
-                    <button class="btn btn-primary"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Sign up</button>
-          </form>
+      <form method="post" action="" id="sign">
+      {% csrf_token %}
+      {% for field in form %}
+        {% if field %}
+          <div class="form-floating mt-2 mb-2">
+            {{field}}
+              <label for="{{ field.id }}">{{ field.label}}</label>
           </div>
+        {% endif %}
+      {%endfor%}
+      </form>
     </div>
-    <div class="col">
+  <div class="col">
+    <div>
+      {% for field in form %}
+        {% if field.errors %}
+          <div class="alert alert-warning" role="alert">
+            <small>{{field.errors}}</small>
+            <button type="button" class="btn-close position-absolute top-0 end-0" data-bs-dismiss="alert" aria-label="Close" onclick="return closenotif()"></button>
+          </div>
+        {% endif %}
+      {%endfor%}
     </div>
+    <div >
+      {% for field in form %}
+        {% if field.help_text %}
+          <div class="alert alert-light" role="alert">
+            <small><small>{{field.help_text}}</small></small>
+          </div>
+        {% endif %}
+      {%endfor%}
+    </div>
+                  
+                  
+  </div>
+  <div class="col"></div>
   </div>
 </div>
+<div class="row w-100">
+  <button form="sign" class="btn btn-primary mx-auto w-25 mt-3"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Sign up</button>
+</div>
 <style>
-  .block {
-      margin-top: 25vh;
+  .container {
+      margin-top: 1vh;
   }
   .notification{
     margin-top: 1vh;
   }
 </style>
+<script>
+  alert = document.getElementById('alert')
+  function closenotif(){
+      alert.classList.add("visually-hidden")
+  }
+</script>
 {% endblock %}

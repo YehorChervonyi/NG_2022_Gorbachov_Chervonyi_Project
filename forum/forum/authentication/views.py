@@ -45,7 +45,7 @@ def signup_user(request):
         form = RegisterUserForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.username = user.username.lower()
+            user.email = user.email.lower()
             user.save()
             messages.success(request, "Registration successful")
             return redirect('login')

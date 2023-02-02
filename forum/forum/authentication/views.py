@@ -31,7 +31,7 @@ def login_user(request):
             elif password == "":
                 messages.warning(request, "Password text area is empty")
             else:
-                messages.warning(request, "Username or Password doesnt exist, try again...")
+                messages.warning(request, "Email or Password doesnt exist, try again...")
 
     context = {}
     return render(request, 'authentication/login.html', context)

@@ -1,7 +1,17 @@
 {% extends 'authentication/layout.html' %}
 {% block title %}Sign up{% endblock %}
 {% block body %}
-<div class="container">
+
+
+{% for field in form %}
+  {% if field.errors %}
+    <div class="alert alert-warning w-25 mx-auto position-absolute start-50 translate-middle-x z-1" role="alert">
+      <small>{{field.errors}}</small>
+      <button type="button" class="btn-close position-absolute top-0 end-0" data-bs-dismiss="alert" aria-label="Close" onclick="return closenotif()"></button>
+    </div>
+  {% endif %}
+{%endfor%}
+<div class="container position-relative">
   <div class="row align-items-center">
     <div class="col"></div>
     <div class="col">
@@ -19,14 +29,6 @@
     </div>
   <div class="col">
     <div>
-      {% for field in form %}
-        {% if field.errors %}
-          <div class="alert alert-warning" role="alert">
-            <small>{{field.errors}}</small>
-            <button type="button" class="btn-close position-absolute top-0 end-0" data-bs-dismiss="alert" aria-label="Close" onclick="return closenotif()"></button>
-          </div>
-        {% endif %}
-      {%endfor%}
     </div>
     <div >
       {% for field in form %}
@@ -48,7 +50,7 @@
 </div>
 <style>
   .container {
-      margin-top: 1vh;
+      margin-top: 15vh;
   }
   .notification{
     margin-top: 1vh;

@@ -5,6 +5,7 @@
     <div class="row align-items-center">
         <div class="col"></div>
         <div class="col">
+          <form id="createtheme">
             {% for field in form %}
             {% if field %}
               <div class="form-floating mt-2 mb-2">
@@ -13,9 +14,18 @@
               </div>
             {% endif %}
           {%endfor%}
+        </form>
         </div>
         <div class="col"></div>
 
     </div>
-</div>
+  </div>
+  <div class="row w-100">
+    <button form="createtheme" class="btn btn-primary mx-auto w-auto mt-3">Create theme</button>
+  </div>
+  <style>
+    .container{
+        margin-top: 25vh;
+    }
+  </style>
 {%endblock%}

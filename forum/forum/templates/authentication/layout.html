@@ -33,6 +33,7 @@
                 </a>
                 <ul class="dropdown-menu">
                   {% if user.is_authenticated%}
+                  <li><a class="dropdown-item" href="{%url 'creatediscussion'%}">Create Discussion</a></li>
                   {% if user.is_superuser%}
                   <li><a class="dropdown-item" href="{%url 'createtheme'%}">Create Theme</a></li>
                   {%endif%}

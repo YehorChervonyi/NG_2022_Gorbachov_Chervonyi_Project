@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms import ModelForm
 
-from .models import Theme
+from .models import Theme, Discussion
 
 
 class RegisterUserForm(UserCreationForm):
@@ -31,4 +31,26 @@ class ThemeForm(ModelForm):
     class Meta:
         model = Theme
         fields = '__all__'
+    def __init__(self, *args, **kwargs):
+        super(ThemeForm, self).__init__(*args, **kwargs)
+
+        self.fields['name_theme'].widget.attrs['class'] = 'form-control'
+        self.fields['name_theme'].widget.attrs['placeholder'] = 'Name Theme'
+
+class DiscussionForm(ModelForm):
+    class Meta:
+        model = Discussion
+        fields = ('name_discussion', 'description', 'theme')
+    def __init__(self, *args, **kwargs):
+        super(DiscussionForm, self).__init__(*args, **kwargs)
+
+        self.fields['name_discussion'].widget.attrs['class'] = 'form-control'
+        self.fields['name_discussion'].widget.attrs['placeholder'] = 'Name Discussion'
+        self.fields['description'].widget.attrs['class'] = 'form-control'
+        self.fields['description'].widget.attrs['placeholder'] = 'Description'
+        self.fields['description'].widget.attrs['style'] = 'resize:none'
+        self.fields['description'].widget.attrs['cols'] = '20'
+        self.fields['description'].widget.attrs['rows'] = '10'
+        self.fields['theme'].widget.attrs['class'] = 'form-control'
+        self.fields['theme'].widget.attrs['placeholder'] = 'Theme'
 

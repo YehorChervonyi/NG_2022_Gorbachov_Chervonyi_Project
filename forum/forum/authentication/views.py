@@ -87,6 +87,8 @@ def create_theme(request):
             theme.save()
             messages.success(request, "Theme created")
             return redirect('home')
+        else:
+            messages.warning(request, "Theme with this name already exist")
         themes = Theme.objects.all()
     context = {'form': form,
         'themes':themes}
@@ -103,13 +105,13 @@ def create_discussion(request):
             messages.success(request, "Discussion created. We believe you wil enjoy")
             return redirect('home')
     context = {'form': form,
-                'themes':themes}
+                'themes': themes}
     return render(request, 'authentication/creatediscussion.html', context)
 
 def discusspage(request, page):
     themes = Theme.objects.all()
     context={
-        'page':page,
-        'themes':themes,
+        'page': page,
+        'themes': themes,
     }
     return render (request, 'authentication/discussion.html', context)

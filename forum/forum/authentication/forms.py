@@ -8,7 +8,7 @@ from .models import Theme, Discussion
 
 class RegisterUserForm(UserCreationForm):
     class Meta:
-        model= User
+        model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
     first_name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder':'firstname'}))
     last_name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder':'lastname'}))
@@ -53,4 +53,5 @@ class DiscussionForm(ModelForm):
         self.fields['description'].widget.attrs['rows'] = '10'
         self.fields['theme'].widget.attrs['class'] = 'form-control'
         self.fields['theme'].widget.attrs['placeholder'] = 'Theme'
+
 

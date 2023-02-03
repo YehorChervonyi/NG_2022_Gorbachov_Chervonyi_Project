@@ -1,6 +1,9 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.forms import ModelForm
+
+from .models import Theme
 
 
 class RegisterUserForm(UserCreationForm):
@@ -22,3 +25,10 @@ class RegisterUserForm(UserCreationForm):
         self.fields['password2'].widget.attrs['class'] = 'form-control'
         self.fields['password2'].widget.attrs['placeholder'] = 'Password2'
         self.fields['password2'].help_text = ''
+
+
+class ThemeForm(ModelForm):
+    class Meta:
+        model = Theme
+        fields = '__all__'
+

@@ -59,3 +59,6 @@ def logout_user(request):
     messages.info(request, "You are logged out")
     return redirect('home')
 
+def create_theme(request):
+    return render(request, 'authentication/createtheme.html')
+

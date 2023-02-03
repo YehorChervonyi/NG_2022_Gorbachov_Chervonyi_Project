@@ -1,6 +1,17 @@
 {% extends 'authentication/layout.html' %}
 {% block title %}Home{% endblock %}
 {% block body %}
-
+<div class="mx-auto">
+    Home page
+</div>
+<hr>
+{%for discusion in discussions reversed %}
+Name:{{discusion}}<br>
+Desc:{{discusion.description}}<br>
+Theme:{{discusion.theme}}<br>
+Updated:{{discusion.update_time}}<br>
+Created:{{discusion.create_time}}<br>
+<hr>
+{%endfor%}
 {% endblock %}
 

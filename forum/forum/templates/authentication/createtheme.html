@@ -1,0 +1,21 @@
+{% extends 'authentication/layout.html' %}
+{% block title %}Create Theme{% endblock %}
+{% block body %}
+<div class="container position-relative">
+    <div class="row align-items-center">
+        <div class="col"></div>
+        <div class="col">
+            {% for field in form %}
+            {% if field %}
+              <div class="form-floating mt-2 mb-2">
+                {{field}}
+                  <label for="{{ field.id }}">{{ field.label}}</label>
+              </div>
+            {% endif %}
+          {%endfor%}
+        </div>
+        <div class="col"></div>
+
+    </div>
+</div>
+{%endblock%}

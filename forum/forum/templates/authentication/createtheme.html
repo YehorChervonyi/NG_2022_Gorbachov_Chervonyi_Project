@@ -5,7 +5,8 @@
     <div class="row align-items-center">
         <div class="col"></div>
         <div class="col">
-          <form id="createtheme">
+          <form id="createtheme" method="post">
+            {% csrf_token %}
             {% for field in form %}
             {% if field %}
               <div class="form-floating mt-2 mb-2">

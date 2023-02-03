@@ -5,6 +5,8 @@
     <div class="row align-items-center">
         <div class="col"></div>
         <div class="col">
+          <form method="post" id="creatediscussion">
+            {% csrf_token %}
             {% for field in form %}
               <!-- {% if field.name == 'theme' %}
                 <select class="form-select">
@@ -27,11 +29,12 @@
               {% endif %}
           {%endfor%}
         </div>
+      </form>
         <div class="col"></div>
 
     </div>
     <div class="row w-100">
-      <button form="createtheme" class="btn btn-primary mx-auto w-auto mt-3">Create discussion</button>
+      <button form="creatediscussion" class="btn btn-primary mx-auto w-auto mt-3">Create discussion</button>
     </div>
     <style>
       .container{

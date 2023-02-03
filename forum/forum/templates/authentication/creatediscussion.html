@@ -1,0 +1,42 @@
+{% extends 'authentication/layout.html' %}
+{% block title %}Create Theme{% endblock %}
+{% block body %}
+<div class="container position-relative">
+    <div class="row align-items-center">
+        <div class="col"></div>
+        <div class="col">
+            {% for field in form %}
+              <!-- {% if field.name == 'theme' %}
+                <select class="form-select">
+                  <option selected>Select theme</option>
+                  {%for theme in field%}
+                  <option value="{{theme}}">{{theme}}</option>
+                  {%endfor%}
+                </select>
+              {%endif%} -->
+              {%if field.name == "description" %}
+                <div class="form mt-2 mb-2">
+                  <!-- <label class='mb-1' for="{{ field.id }}">{{ field.label}}</label> -->
+                    {{field}}
+                </div>
+                {%else%}
+                <div class="form-floating mt-2 mb-2">
+                  {{field}}
+                    <label for="{{ field.id }}">{{ field.label}}</label>
+                </div>
+              {% endif %}
+          {%endfor%}
+        </div>
+        <div class="col"></div>
+
+    </div>
+    <div class="row w-100">
+      <button form="createtheme" class="btn btn-primary mx-auto w-auto mt-3">Create discussion</button>
+    </div>
+    <style>
+      .container{
+          margin-top: 20vh;
+      }
+    </style>
+</div>
+{%endblock%}

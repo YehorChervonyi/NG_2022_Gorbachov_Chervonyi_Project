@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
-from . forms import RegisterUserForm , User
+from . forms import RegisterUserForm, User, ThemeForm
+
 
 # Create your views here.
 def home_page(request):
@@ -60,5 +61,7 @@ def logout_user(request):
     return redirect('home')
 
 def create_theme(request):
-    return render(request, 'authentication/createtheme.html')
+    form = ThemeForm
+    context = {'form': form}
+    return render(request, 'authentication/createtheme.html', context)
 

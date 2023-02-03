@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
-from . forms import RegisterUserForm, User, ThemeForm
+from . forms import RegisterUserForm, User, ThemeForm, DiscussionForm
 
 
 # Create your views here.
@@ -65,3 +65,7 @@ def create_theme(request):
     context = {'form': form}
     return render(request, 'authentication/createtheme.html', context)
 
+def create_discussion(request):
+    form = DiscussionForm
+    context = {'form': form}
+    return render(request, 'authentication/creatediscussion.html', context)

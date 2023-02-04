@@ -2,4 +2,28 @@
 {% block title %}Home{% endblock %}
 {% block body %}
     Now you on | {{page}} | page
+{{page}}
+<hr>
+{%for discussion in discussions reversed %}
+Theme: {{discussion.theme}}<br>
+Name: {{discussion}}<br>
+Desc: {{discussion.description}}<br>
+Updated: {{discussion.update_time}}<br>
+Created: {{discussion.create_time}}<br>
+Author: {{discussion.author_discussion}}<br>
+<a href="/{{page}}/{{discussion}}">Go to discussion</a>
+{% endfor %}
+
+<hr>
+<!--<hr>Comments:<hr><br>-->
+<!--    {% for comment in comments reversed %}-->
+<!--&lt;!&ndash;    {% if comment.discussion == ""%}&ndash;&gt;-->
+<!--        Text: {{comment}}<br>-->
+<!--        Discussion: {{comment.discussion}}<br>-->
+<!--        Updated: {{comment.update_time}}<br>-->
+<!--        Created: {{comment.create_time}}<br>-->
+<!--&lt;!&ndash;    {%endif%}&ndash;&gt;-->
+<!--    <hr>-->
+<!--    {%endfor%}-->
+
 {% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'authentication/layout.html' %}
+{% block title %}Home{% endblock %}
+{% block body %}
+<div class="mx-auto">
+    Now you on | {{page}} | page
+</div>
+<hr>
+{%for comment in comments reversed %}
+Name: {{comment}}<br>
+Desc: {{comment.discussion}}<br>
+Updated: {{comment.update_time}}<br>
+Created: {{comment.create_time}}<br>
+
+<hr>
+{%endfor%}
+{% endblock %}
+

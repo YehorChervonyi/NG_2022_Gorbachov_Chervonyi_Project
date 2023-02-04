@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from . forms import RegisterUserForm, User, ThemeForm, DiscussionForm
-from . models import Theme, Discussion
+from . models import Theme, Discussion, Comments
 
 
 
@@ -10,10 +10,10 @@ from . models import Theme, Discussion
 # Create your views here.
 def home_page(request):
     themes = Theme.objects.all()
-    discussions=Discussion.objects.all()
-    context={
-        'discussions':discussions,
-        'themes':themes
+    discussions = Discussion.objects.all()
+    context = {
+        'discussions': discussions,
+        'themes': themes,
     }
     return render(request, 'authentication/main.html', context)
 
@@ -76,6 +76,7 @@ def logout_user(request):
     messages.info(request, "You are logged out")
     return redirect('home')
 
+
 def create_theme(request):
     themes = Theme.objects.all()
     
@@ -91,12 +92,15 @@ def create_theme(request):
             messages.warning(request, "Theme with this name already exist")
         themes = Theme.objects.all()
     context = {'form': form,
-        'themes':themes}
+               'themes': themes}
     return render(request, 'authentication/createtheme.html', context)
+
 
 def create_discussion(request):
     themes = Theme.objects.all()
     form = DiscussionForm
+    # current_user = request.user
+    # print(current_user)
     if request.method == "POST":
         form = DiscussionForm(request.POST)
         if form.is_valid():
@@ -105,13 +109,39 @@ def create_discussion(request):
             messages.success(request, "Discussion created. We believe you wil enjoy")
             return redirect('home')
     context = {'form': form,
-                'themes': themes}
+               'themes': themes,
+               }
     return render(request, 'authentication/creatediscussion.html', context)
 
 def discusspage(request, page):
     themes = Theme.objects.all()
-    context={
+    discussions = None
+    comments = None
+    for one_theme in themes:
+        print("WR")
+        print(one_theme)
+        print(page)
+        if one_theme == page and page != "favicon.ico":
+            print("Working")
+            discussions = Discussion.objects.filter(theme=one_theme)
+            comments = Comments.objects.all()
+    context = {
         'page': page,
         'themes': themes,
+        'discussions': discussions,
+        'comments': comments
     }
-    return render (request, 'authentication/discussion.html', context)
+
+    return render(request, 'authentication/discussion.html', context)
+
+
+
+# def commentpage(request, page, discussion):
+#     discussions = Discussion.objects.all()
+#     comments = Comments.objects.all()
+#     context = {
+#         'page': page,
+#         'discussions': discussions,
+#         'comments': comments
+#     }
+#     return render(request, 'authentication/comments.html', context)

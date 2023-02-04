@@ -3,6 +3,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from . forms import RegisterUserForm, User, ThemeForm, DiscussionForm
 from . models import Theme, Discussion, Comments
+from django.contrib.auth.decorators import login_required, permission_required
 
 
 
@@ -76,7 +77,8 @@ def logout_user(request):
     messages.info(request, "You are logged out")
     return redirect('home')
 
-
+@login_required(login_url='login')
+@permission_required('admin', raise_exception=True)
 def create_theme(request):
     themes = Theme.objects.all()
     
@@ -99,12 +101,13 @@ def create_theme(request):
 def create_discussion(request):
     themes = Theme.objects.all()
     form = DiscussionForm
-    # current_user = request.user
-    # print(current_user)
+    current_user = request.user.username
+    print(current_user)
     if request.method == "POST":
         form = DiscussionForm(request.POST)
         if form.is_valid():
             discussion = form.save(commit=False)
+            discussion.author_discussion = current_user
             discussion.save()
             messages.success(request, "Discussion created. We believe you wil enjoy")
             return redirect('home')
@@ -118,11 +121,7 @@ def discusspage(request, page):
     discussions = None
     comments = None
     for one_theme in themes:
-        print("WR")
-        print(one_theme)
-        print(page)
-        if one_theme == page and page != "favicon.ico":
-            print("Working")
+        if str(one_theme) == str(page):
             discussions = Discussion.objects.filter(theme=one_theme)
             comments = Comments.objects.all()
     context = {
@@ -132,7 +131,7 @@ def discusspage(request, page):
         'comments': comments
     }
 
-    return render(request, 'authentication/discussion.html', context)
+    return render(request, 'authentication/theme.html', context)
 
 
 

@@ -1,10 +1,9 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
-from django.contrib.auth.models import User
 User._meta.get_field('email')._unique = True
-
 
 class Theme(models.Model):
     name_theme = models.CharField(max_length=100, unique=True)
@@ -19,7 +18,7 @@ class Discussion(models.Model):
     theme = models.ForeignKey(Theme, null=False, on_delete=models.CASCADE)
     update_time = models.DateTimeField(auto_now=True)
     create_time = models.DateTimeField(auto_now_add=True)
-    # author_discussion = models.ForeignKey(get_user_model(), null=False, on_delete=models.CASCADE)
+    author_discussion = models.TextField(null=True)
 
     def __str__(self):
         return self.name_discussion

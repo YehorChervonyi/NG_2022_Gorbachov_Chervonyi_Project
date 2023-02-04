@@ -5,12 +5,13 @@
     Home page
 </div>
 <hr>
-{%for discusion in discussions reversed %}
-Name:{{discusion}}<br>
-Desc:{{discusion.description}}<br>
-Theme:{{discusion.theme}}<br>
-Updated:{{discusion.update_time}}<br>
-Created:{{discusion.create_time}}<br>
+{%for discussion in discussions reversed %}
+Name: {{discussion}}<br>
+Desc: {{discussion.description}}<br>
+Theme: {{discussion.theme}}<br>
+Updated: {{discussion.update_time}}<br>
+Created: {{discussion.create_time}}<br>
+Author: {{discussion.author_discussion}}<br>
 <hr>
 {%endfor%}
 {% endblock %}

@@ -10,4 +10,5 @@ urlpatterns = [
     path('createtheme/', views.create_theme, name="createtheme"),
     path('creatediscussion/', views.create_discussion, name="creatediscussion"),
     path('<str:page>/', views.discusspage),
+    # path('<str:page>/<str:discussion>', views.commentpage)
 ]

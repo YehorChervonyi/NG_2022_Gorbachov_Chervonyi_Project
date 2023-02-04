@@ -14,6 +14,8 @@ class RegisterUserForm(UserCreationForm):
     last_name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder':'lastname'}))
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder':'email'}))
 
+    def __str__(self):
+        return User.username
     def __init__(self, *args, **kwargs):
         super(RegisterUserForm, self).__init__(*args, **kwargs)
 

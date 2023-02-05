@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
-from . forms import RegisterUserForm, User, ThemeForm, DiscussionForm
+from . forms import RegisterUserForm, User, ThemeForm, DiscussionForm, CommentsForm
 from . models import Theme, Discussion, Comments
 from django.contrib.auth.decorators import login_required, permission_required
+from django.http import HttpResponseRedirect
 
 
 
@@ -26,7 +27,6 @@ def login_user(request):
     if request.method == "POST":
         email = request.POST['email'].strip()
         password = request.POST['password'].strip()
-        # username = User.objects.get(email=email.lower()).username
         try:
             get_user = User.objects.get(email=email)
         except:
@@ -106,7 +106,6 @@ def create_discussion(request):
     themes = Theme.objects.all()
     form = DiscussionForm
     current_user = request.user.username
-    print(current_user)
     if request.method == "POST":
         form = DiscussionForm(request.POST)
         if form.is_valid():
@@ -120,10 +119,9 @@ def create_discussion(request):
                }
     return render(request, 'authentication/creatediscussion.html', context)
 
-def discusspage(request, page):
+def themepage(request, page):
     themes = Theme.objects.all()
     discussions = None
-    comments = None
     for one_theme in themes:
         if str(one_theme) == str(page):
             discussions = Discussion.objects.filter(theme=one_theme)
@@ -137,8 +135,10 @@ def discusspage(request, page):
 
 
 
-def commentpage(request, page, discussionid):
+def discussionpage(request, page, discussionid):
     themes = Theme.objects.all()
+    form= CommentsForm
+    current_user = request.user.username
     discussions = Discussion.objects.all()
     discusss = None
     comments = None
@@ -146,9 +146,19 @@ def commentpage(request, page, discussionid):
         if str(onediscussion.id) == str(discussionid):
             discusss = Discussion.objects.filter(id=onediscussion.id)
             comments = Comments.objects.filter(discussion=onediscussion)
+            if request.method == "POST":
+                form = CommentsForm(request.POST)
+                if form.is_valid():
+                    comment = form.save(commit=False)
+                    comment.author_comment = current_user
+                    comment.discussion = Discussion.objects.filter(id=onediscussion.id)[0]
+                    comment.save()
+                    messages.success(request, "Thank you for comment")
+                    return HttpResponseRedirect('/'+page+'/'+discussionid)
 
     context = {
         'page': page,
+        'form':form,
         'themes':themes,
         'discussionid': discussionid,
         'discusss': discusss,

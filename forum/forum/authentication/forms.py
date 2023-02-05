@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms import ModelForm
 
-from .models import Theme, Discussion
+from .models import Theme, Discussion, Comments
 
 
 class RegisterUserForm(UserCreationForm):
@@ -56,4 +56,14 @@ class DiscussionForm(ModelForm):
         self.fields['theme'].widget.attrs['class'] = 'form-control'
         self.fields['theme'].widget.attrs['placeholder'] = 'Theme'
 
+class CommentsForm(ModelForm):
+    class Meta:
+        model = Comments
+        fields = ('text_comment',)
+    def __init__(self, *args, **kwargs):
+        super(CommentsForm, self).__init__(*args, **kwargs)
+
+        self.fields['text_comment'].widget.attrs['class'] = 'form-control'
+        self.fields['text_comment'].widget.attrs['placeholder'] = 'Your comment here...'
+        self.fields['text_comment'].widget.attrs['rows'] = '10'
 

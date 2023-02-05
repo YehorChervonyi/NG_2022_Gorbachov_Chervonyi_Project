@@ -19,6 +19,7 @@ class Discussion(models.Model):
     update_time = models.DateTimeField(auto_now=True)
     create_time = models.DateTimeField(auto_now_add=True)
     author_discussion = models.TextField(null=True)
+    id = models.BigAutoField(primary_key=True)
 
     def __str__(self):
         return self.name_discussion
@@ -29,7 +30,7 @@ class Comments(models.Model):
     discussion = models.ForeignKey(Discussion, null=False, on_delete=models.CASCADE)
     update_time = models.DateTimeField(auto_now=True)
     create_time = models.DateTimeField(auto_now_add=True)
-    # author_comment = models.ForeignKey(get_user_model(), null=True, on_delete=models.SET_NULL)
+    # author_comment = models.TextField(null=True)
 
     def __str__(self):
         return self.text_comment

@@ -123,24 +123,29 @@ def discusspage(request, page):
     for one_theme in themes:
         if str(one_theme) == str(page):
             discussions = Discussion.objects.filter(theme=one_theme)
-            comments = Comments.objects.all()
     context = {
         'page': page,
         'themes': themes,
         'discussions': discussions,
-        'comments': comments
     }
 
     return render(request, 'authentication/theme.html', context)
 
 
 
-# def commentpage(request, page, discussion):
-#     discussions = Discussion.objects.all()
-#     comments = Comments.objects.all()
-#     context = {
-#         'page': page,
-#         'discussions': discussions,
-#         'comments': comments
-#     }
-#     return render(request, 'authentication/comments.html', context)
+def commentpage(request, page, discussionid):
+    discussions = Discussion.objects.all()
+    discusss = None
+    comments = None
+    for onediscussion in discussions:
+        if str(onediscussion.id) == str(discussionid):
+            discusss = Discussion.objects.filter(name_discussion=onediscussion)
+            comments = Comments.objects.filter(discussion=onediscussion)
+
+    context = {
+        'page': page,
+        'discussionid': discussionid,
+        'discusss': discusss,
+        'comments': comments
+    }
+    return render(request, 'authentication/discussion.html', context)

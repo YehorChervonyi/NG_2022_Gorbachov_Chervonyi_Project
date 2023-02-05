@@ -144,7 +144,7 @@ def commentpage(request, page, discussionid):
     comments = None
     for onediscussion in discussions:
         if str(onediscussion.id) == str(discussionid):
-            discusss = Discussion.objects.filter(name_discussion=onediscussion)
+            discusss = Discussion.objects.filter(id=onediscussion.id)
             comments = Comments.objects.filter(discussion=onediscussion)
 
     context = {

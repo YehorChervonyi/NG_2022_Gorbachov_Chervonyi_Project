@@ -2,18 +2,21 @@
 {% block title %}Home{% endblock %}
 {% block body %}
 <div class="mx-auto">
-    Now you on | {{conference}} | discussion
+    Now you on |  | discussion
 </div>
 <hr>
-{{discusss}}
+{% for discuss in discusss%}
+Theme: {{discuss.theme}}<br>
+Name: {{discuss}}<br>
+Desc: {{discuss.description}}<br>
+Updated: {{discuss.update_time}}<br>
+Created: {{discuss.create_time}}<br>
+Author: {{discuss.author_discussion}}<br>
+{% endfor%}
+<hr>
 {%for comment in comments reversed %}
-<h4>
-Name of discussion: {{comment.discussion}}<br>
 Text: {{comment}}<br>
-</h4><h6>
-Updated: {{comment.update_time}}<br>
 Created: {{comment.create_time}}<br>
-</h6>
 <hr>
 {%endfor%}
 {% endblock %}

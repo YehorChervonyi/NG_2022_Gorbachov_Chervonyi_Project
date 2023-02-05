@@ -31,7 +31,7 @@ class Comments(models.Model):
     discussion = models.ForeignKey(Discussion, null=False, on_delete=models.CASCADE)
     update_time = models.DateTimeField(auto_now=True)
     create_time = models.DateTimeField(auto_now_add=True)
-    # author_comment = models.TextField(null=True)
+    author_comment = models.TextField(null=True)
 
     def __str__(self):
         return self.text_comment

@@ -1,30 +1,36 @@
 {% extends 'authentication/layout.html' %}
 {% block title %}Home{% endblock %}
 {% block body %}
-    Now you on | {{page}} | page
-{{page}}
-<hr>
-{%for discussion in discussions reversed %}
-Theme: {{discussion.theme}}<br>
-Name: {{discussion}}<br>
-Desc: {{discussion.description}}<br>
-Updated: {{discussion.update_time}}<br>
-Created: {{discussion.create_time}}<br>
-Author: {{discussion.author_discussion}}<br>
-<a href="/{{page}}/{{discussion.id}}/">Go to discussion</a>
-<hr>
-{% endfor %}
+<div class="container align-items-center">
+    <div class="row">
+        {%for discussion in discussions reversed %}
+        <div class="card mt-2 mb-2 w-75 mx-auto">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col"><h5 class="card-title g-col-6">{{discussion}} </h5></div>
+                    <div class="col">
+                        <div class="text-end">
+                            <span class="mb-1 badge text-bg-success">{{discussion.author_discussion}}</span><br>
 
-<hr>
-<!--<hr>Comments:<hr><br>-->
-<!--    {% for comment in comments reversed %}-->
-<!--&lt;!&ndash;    {% if comment.discussion == ""%}&ndash;&gt;-->
-<!--        Text: {{comment}}<br>-->
-<!--        Discussion: {{comment.discussion}}<br>-->
-<!--        Updated: {{comment.update_time}}<br>-->
-<!--        Created: {{comment.create_time}}<br>-->
-<!--&lt;!&ndash;    {%endif%}&ndash;&gt;-->
-<!--    <hr>-->
-<!--    {%endfor%}-->
-
+                            <span class="text-wrap badge bg-secondary">{{discussion.theme}}</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="card-text"><small class="text-muted">Created: {{discussion.create_time}}</small></p>
+                
+                
+                <p class="card-text">{{discussion.description}}</p>
+                <div class="row align-items-center">
+                    <div class="col">
+                        <button class="btn btn-primary"><a href="/{{discussion.theme}}/{{discussion.id}}/" style="color:aliceblue; text-decoration: none;">Go to discussion</a></button>
+                    </div>
+                    <div class="col text-end">
+                        <p class="card-text"><small class="text-muted">Updated: {{discussion.update_time}}</small></p>
+                    </div>
+              </div>
+            </div>
+          </div>
+        {%endfor%}
+    </div>
+</div>
 {% endblock %}

@@ -10,11 +10,13 @@ from django.contrib.auth.decorators import login_required, permission_required
 
 # Create your views here.
 def home_page(request):
+    page = "Home"
     themes = Theme.objects.all()
     discussions = Discussion.objects.all()
     context = {
         'discussions': discussions,
         'themes': themes,
+        'page':page,
     }
     return render(request, 'authentication/main.html', context)
 
@@ -90,6 +92,8 @@ def create_theme(request):
             theme.save()
             messages.success(request, "Theme created")
             return redirect('home')
+        elif form.errors:
+            messages.warning(request, 'Theme cant include +-/%?#$*^@!&[]')
         else:
             messages.warning(request, "Theme with this name already exist")
         themes = Theme.objects.all()
@@ -134,6 +138,7 @@ def discusspage(request, page):
 
 
 def commentpage(request, page, discussionid):
+    themes = Theme.objects.all()
     discussions = Discussion.objects.all()
     discusss = None
     comments = None
@@ -144,6 +149,7 @@ def commentpage(request, page, discussionid):
 
     context = {
         'page': page,
+        'themes':themes,
         'discussionid': discussionid,
         'discusss': discusss,
         'comments': comments

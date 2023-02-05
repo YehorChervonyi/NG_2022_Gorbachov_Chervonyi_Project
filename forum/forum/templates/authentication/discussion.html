@@ -29,17 +29,23 @@
               </div>
               <h3>Comments:</h3>
               <div class="form">
-                <form >
-                    <textarea class="form-control mb-2" placeholder="Leave a comment here" rows="10"></textarea>
-                    <button class="btn btn-primary">Comments</button>
-
+                <form method="post" >
+                  {% csrf_token %}
+                  {% for field in form %}
+                  {% if field %}
+                    <div class="form mt-2 mb-2">
+                      {{field}}
+                    </div>
+                  {% endif %}
+                {%endfor%}
+                <button class="btn btn-primary">Comment</button>
                 </form>
               </div>
               <hr>
               {%for comment in comments reversed %}
               <div class="card mt-1">
                 <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
+                  <h5 class="card-title">{{comment.author_comment}}</h5>
                   <h6 class="card-subtitle mb-2 text-muted"><small>{{comment.create_time}}</small></h6>
                   <p class="card-text">{{comment}}</p>
                 </div>

@@ -8,17 +8,8 @@
           <form method="post" id="creatediscussion">
             {% csrf_token %}
             {% for field in form %}
-              <!-- {% if field.name == 'theme' %}
-                <select class="form-select">
-                  <option selected>Select theme</option>
-                  {%for theme in field%}
-                  <option value="{{theme}}">{{theme}}</option>
-                  {%endfor%}
-                </select>
-              {%endif%} -->
               {%if field.name == "description" %}
                 <div class="form mt-2 mb-2">
-                  <!-- <label class='mb-1' for="{{ field.id }}">{{ field.label}}</label> -->
                     {{field}}
                 </div>
                 {%else%}

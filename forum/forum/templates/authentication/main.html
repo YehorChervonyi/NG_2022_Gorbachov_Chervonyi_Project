@@ -11,14 +11,11 @@
                     <div class="col">
                         <div class="text-end">
                             <span class="mb-1 badge text-bg-success">{{discussion.author_discussion}}</span><br>
-
                             <span class="text-wrap badge bg-secondary">{{discussion.theme}}</span>
                         </div>
                     </div>
                 </div>
                 <p class="card-text"><small class="text-muted">Created: {{discussion.create_time}}</small></p>
-                
-                
                 <p class="card-text">{{discussion.description}}</p>
                 <div class="row align-items-center">
                     <div class="col">
@@ -30,9 +27,8 @@
               </div>
             </div>
           </div>
-        {%endfor%}
+          {%endfor%}
+        </div>
     </div>
-</div>
-
-{% endblock %}
+    {% endblock %}
 

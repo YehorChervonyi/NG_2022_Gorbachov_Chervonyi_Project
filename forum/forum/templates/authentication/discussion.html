@@ -1,23 +1,53 @@
 {% extends 'authentication/layout.html' %}
 {% block title %}Home{% endblock %}
 {% block body %}
-<div class="mx-auto">
-    Now you on |  | discussion
-</div>
-<hr>
-{% for discuss in discusss%}
-Theme: {{discuss.theme}}<br>
-Name: {{discuss}}<br>
-Desc: {{discuss.description}}<br>
-Updated: {{discuss.update_time}}<br>
-Created: {{discuss.create_time}}<br>
-Author: {{discuss.author_discussion}}<br>
-{% endfor%}
-<hr>
-{%for comment in comments reversed %}
-Text: {{comment}}<br>
-Created: {{comment.create_time}}<br>
-<hr>
-{%endfor%}
-{% endblock %}
+<div class="container align-items-center">
+    <div class="row">
+        {%for discuss in discusss reversed %}
+        <div class="card mt-2 mb-2 w-75 mx-auto">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col"><h5 class="card-title g-col-6">{{discuss}} </h5></div>
+                    <div class="col">
+                        <div class="text-end">
+                            <span class="mb-1 badge text-bg-success">{{discuss.author_discussion}}</span><br>
 
+                            <span class="text-wrap badge bg-secondary">{{discuss.theme}}</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="card-text"><small class="text-muted">Created: {{discuss.create_time}}</small></p>
+                
+                
+                <p class="card-text">{{discuss.description}}</p>
+                <div class="row align-items-center">
+                    <div class="col">
+                    </div>
+                    <div class="col text-end">
+                        <p class="card-text"><small class="text-muted">Updated: {{discuss.update_time}}</small></p>
+                    </div>
+              </div>
+              <h3>Comments:</h3>
+              <div class="form">
+                <form >
+                    <textarea class="form-control mb-2" placeholder="Leave a comment here" rows="10"></textarea>
+                    <button class="btn btn-primary">Comments</button>
+
+                </form>
+              </div>
+              <hr>
+              {%for comment in comments reversed %}
+              <div class="card mt-1">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <h6 class="card-subtitle mb-2 text-muted"><small>{{comment.create_time}}</small></h6>
+                  <p class="card-text">{{comment}}</p>
+                </div>
+              </div>
+              {%endfor%}
+            </div>
+          </div>
+        {%endfor%}
+    </div>
+</div>
+{% endblock %}

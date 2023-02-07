@@ -20,6 +20,13 @@
                 
                 
                 <p class="card-text">{{discuss.description}}</p>
+                {%if discuss.image%}
+                <p class="card-text">
+                  <center>
+                  <img class="img-fluid" src="{{discuss.image.url}}" alt="">
+                  </center>
+                </p>
+                {%endif%}
                 <div class="row align-items-center">
                     <div class="col">
                     </div>

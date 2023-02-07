@@ -12,7 +12,7 @@
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
         <div class="container-fluid">
           <a class="navbar-brand" href="{%url 'home'%}"><i class="fa fa-terminal" aria-hidden="true"></i></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -92,7 +92,42 @@
         </div>
   {% endfor %}
     {% block body %}
+
     {% endblock %}
+    {%if discussions.paginator.num_pages > 1%}
+    <nav>
+      <ul class="pagination justify-content-center">
+          {%if discussions.has_previous%}
+          <li class="page-item">
+              <a class="page-link" href="?pg=1" aria-label="Previous">
+                  <span aria-hidden="true">&laquo; First</span>
+              </a>
+          </li>
+          <li class="page-item">
+              <a class="page-link" href="?pg={{discussions.previous_page_number}}" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+              </a>
+          </li>
+          <li class="page-item"><a class="page-link" href="?pg={{discussions.previous_page_number}}">{{discussions.previous_page_number}}</a></li>
+          {%endif%}
+
+        <li class="page-item"><a class="page-link active"><sup>{{discussions.number}}</sup>/<sub>{{discussions.paginator.num_pages}}</sub> </a></li>
+        {%if discussions.has_next%}
+        <li class="page-item"><a class="page-link" href="?pg={{discussions.next_page_number}}">{{discussions.next_page_number}}</a></li>
+        <li class="page-item">
+            <a class="page-link" href="?pg={{discussions.next_page_number}}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+          </li>
+          <li class="page-item">
+              <a class="page-link" href="?pg={{discussions.paginator.num_pages}}" aria-label="Next">
+                  <span aria-hidden="true">Last &raquo;</span>
+              </a>
+          </li>
+          {%endif%}
+      </ul>
+    </nav>
+    {%endif%}
 </body>
 <script>
   alert = document.getElementById('alert')

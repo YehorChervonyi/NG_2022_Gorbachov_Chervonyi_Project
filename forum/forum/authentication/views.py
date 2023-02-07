@@ -14,7 +14,8 @@ from django.core.paginator import Paginator
 def home_page(request):
     page = "Home"
     themes = Theme.objects.all()
-    pag = Paginator(Discussion.objects.all(),5)
+    discussions_all = Discussion.objects.all().order_by('id')
+    pag = Paginator(discussions_all.reverse(),5)
     pg=request.GET.get('pg')
     discussions = pag.get_page(pg)
     context = {

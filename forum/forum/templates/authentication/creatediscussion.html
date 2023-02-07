@@ -4,11 +4,11 @@
 <div class="container position-relative">
     <div class="row align-items-center">
         <div class="col"></div>
-        <div class="col">
-          <form method="post" id="creatediscussion">
+        <div class="col ">
+          <form method="post" enctype="multipart/form-data" id="creatediscussion">
             {% csrf_token %}
             {% for field in form %}
-              {%if field.name == "description" %}
+              {%if field.name == "description" or field.name == "image" %}
                 <div class="form mt-2 mb-2">
                     {{field}}
                 </div>
@@ -29,7 +29,7 @@
     </div>
     <style>
       .container{
-          margin-top: 20vh;
+          margin-top: 15vh;
       }
     </style>
 </div>

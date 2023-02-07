@@ -110,7 +110,7 @@ def create_discussion(request):
     form = DiscussionForm
     current_user = request.user.username
     if request.method == "POST":
-        form = DiscussionForm(request.POST)
+        form = DiscussionForm(request.POST, request.FILES)
         if form.is_valid():
             discussion = form.save(commit=False)
             discussion.author_discussion = current_user

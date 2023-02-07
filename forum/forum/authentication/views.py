@@ -5,6 +5,7 @@ from . forms import RegisterUserForm, User, ThemeForm, DiscussionForm, CommentsF
 from . models import Theme, Discussion, Comments
 from django.contrib.auth.decorators import login_required, permission_required
 from django.http import HttpResponseRedirect
+from django.core.paginator import Paginator
 
 
 
@@ -13,7 +14,9 @@ from django.http import HttpResponseRedirect
 def home_page(request):
     page = "Home"
     themes = Theme.objects.all()
-    discussions = Discussion.objects.all()
+    pag = Paginator(Discussion.objects.all(),5)
+    pg=request.GET.get('pg')
+    discussions = pag.get_page(pg)
     context = {
         'discussions': discussions,
         'themes': themes,
@@ -124,7 +127,9 @@ def themepage(request, page):
     discussions = None
     for one_theme in themes:
         if str(one_theme) == str(page):
-            discussions = Discussion.objects.filter(theme=one_theme)
+            pag = Paginator(Discussion.objects.filter(theme=one_theme),5)
+            pg=request.GET.get('pg')
+            discussions = pag.get_page(pg)
     context = {
         'page': page,
         'themes': themes,

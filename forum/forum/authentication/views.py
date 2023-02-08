@@ -192,3 +192,17 @@ def discussionpage(request, page, discussionid):
     }
     return render(request, 'authentication/discussion.html', context)
 
+def notificationspage(request):
+    themes = Theme.objects.all()
+    current_user = request.user
+    notifications_all = Notification.objects.filter(owner=current_user).order_by('create_time')
+    pag = Paginator(notifications_all.reverse(), 5)
+    pg = request.GET.get('pg')
+    notifications = pag.get_page(pg)
+    page = "Notifications"
+    context = {
+        'themes': themes,
+        'notifications':notifications,
+        'page': page,
+    }
+    return render(request, 'authentication/notifications.html', context)

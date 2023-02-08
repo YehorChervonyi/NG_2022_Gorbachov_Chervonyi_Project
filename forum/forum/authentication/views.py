@@ -2,12 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from . forms import RegisterUserForm, User, ThemeForm, DiscussionForm, CommentsForm
-from . models import Theme, Discussion, Comments
+from . models import Theme, Discussion, Comments, Notification
 from django.contrib.auth.decorators import login_required, permission_required
 from django.http import HttpResponseRedirect
 from django.core.paginator import Paginator
-
-
 
 
 # Create your views here.
@@ -15,13 +13,13 @@ def home_page(request):
     page = "Home"
     themes = Theme.objects.all()
     discussions_all = Discussion.objects.all().order_by('id')
-    pag = Paginator(discussions_all.reverse(),5)
-    pg=request.GET.get('pg')
+    pag = Paginator(discussions_all.reverse(), 5)
+    pg = request.GET.get('pg')
     discussions = pag.get_page(pg)
     context = {
         'discussions': discussions,
         'themes': themes,
-        'page':page,
+        'page': page,
     }
     return render(request, 'authentication/main.html', context)
 
@@ -52,7 +50,7 @@ def login_user(request):
                 messages.warning(request, "Email or Password doesnt exist, try again...")
 
     context = {
-        'themes':themes
+        'themes': themes
     }
     return render(request, 'authentication/login.html', context)
 
@@ -143,8 +141,8 @@ def themepage(request, page):
 
 def discussionpage(request, page, discussionid):
     themes = Theme.objects.all()
-    form= CommentsForm
-    current_user = request.user.username
+    form = CommentsForm
+    current_user = request.user
     discussions = Discussion.objects.all()
     discusss = None
     comments = None
@@ -158,16 +156,39 @@ def discussionpage(request, page, discussionid):
                     comment = form.save(commit=False)
                     comment.author_comment = current_user
                     comment.discussion = Discussion.objects.filter(id=onediscussion.id)[0]
+
+                    lst = (', ', ' ', ',', '.', '. ', '!', '! ',
+                           '?', '? ', ') ', ')', '( ', '(')
+                    text = comment.text_comment
+                    for word in text.split():
+                        for char in lst:
+                            if char in word[0]:
+                                break
+                            word = word.split(char)[0]
+                        if word[0] == "@":
+                            user = word[1:]
+
+                            try:
+                                userdb = User.objects.get(username=user)
+                                Notification.objects.create(owner=userdb,
+                                                            notification="You was mentioned in discussion",
+                                                            url="/"+page+"/"+discussionid)
+                            except:
+                                messages.warning(request, "User doesnt exist, write correct username")
+                                break
+
+
                     comment.save()
                     messages.success(request, "Thank you for comment")
                     return HttpResponseRedirect('/'+page+'/'+discussionid)
 
     context = {
         'page': page,
-        'form':form,
-        'themes':themes,
+        'form': form,
+        'themes': themes,
         'discussionid': discussionid,
         'discusss': discusss,
         'comments': comments
     }
     return render(request, 'authentication/discussion.html', context)
+

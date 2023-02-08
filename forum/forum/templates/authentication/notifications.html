@@ -1,0 +1,23 @@
+{% extends 'authentication/layout.html' %}
+{% block title %}Create Theme{% endblock %}
+{% block body %}
+<div class="container align-items-center">
+    <div class="row">
+        {% for notification in notifications %}
+        <div class="card mt-2 mb-2 w-75 mx-auto">
+            <div class="card-body">
+                    <div class="col"><h5 class="card-title g-col-6">{{notification.notification}} </h5></div>
+                <div class="row align-items-center">
+                    <div class="col ">
+                        <p class="card-text"><small class="text-muted">{{notification.create_time}}</small></p>
+                    </div>
+                    <div class="col text-end">
+                        <button class="btn btn-primary"><a href="{{notification.url}}" style="color:aliceblue; text-decoration: none;">Go to discussion</a></button>
+                    </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

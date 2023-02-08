@@ -17,14 +17,17 @@
                     </div>
                 </div>
                 <p class="card-text"><small class="text-muted">Created: {{discuss.create_time}}</small></p>
-                
-                
+
+
                 <p class="card-text">{{discuss.description}}</p>
-                {%if discuss.image%}
+                {%if discuss.file%}
                 <p class="card-text">
-                  <center>
-                  <img class="img-fluid" src="{{discuss.image.url}}" alt="">
-                  </center>
+                    Pinned file:
+                <button class="btn btn-primary">
+                    <a style="text-decoration:none; color:aliceblue" target="_blank" href="{{discuss.file.url}}">Open file</a>
+                </button>
+
+
                 </p>
                 {%endif%}
                 <div class="row align-items-center">

@@ -30,15 +30,11 @@
                   {%if themes|length == 0 %}
                     <li><a class="dropdown-item disabled">No themes yet</a></li>
                   {%endif%}
-                  {% if user.is_authenticated%}
                     {%for theme in themes%}
                       <li><a class="dropdown-item" href="/{{theme}}">{{theme}}</a></li>
                     {%endfor%}
-                  {%else%}
-                  {%for theme in themes%}
-                  <li><a class="dropdown-item disabled">{{theme}}</a></li>
-                  {%endfor%}
-                  {%endif%}
+
+
                 </ul>
               </li>
 
@@ -46,15 +42,16 @@
 
 
               <li class="nav-item dropdown">
+                  {% if user.is_authenticated%}
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Actions
                 </a>
+                  {%endif%}
                 <ul class="dropdown-menu">
-                  {% if user.is_authenticated%}
+
                   <li><a class="dropdown-item" href="{%url 'creatediscussion'%}">Create Discussion</a></li>
                   {% if user.is_superuser%}
                   <li><a class="dropdown-item" href="{%url 'createtheme'%}">Create Theme</a></li>
-                  {%endif%}
                   {%endif%}
                 </ul>
               </li>

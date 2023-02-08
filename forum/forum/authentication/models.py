@@ -21,7 +21,7 @@ class Discussion(models.Model):
     create_time = models.DateTimeField(auto_now_add=True)
     author_discussion = models.TextField(null=True)
     id = models.BigAutoField(primary_key=True)
-    image = models.ImageField(null=True, blank=True, upload_to="images/")
+    file = models.FileField(null=True, blank=True, upload_to="uploads/")
 
     def __str__(self):
         return self.name_discussion

@@ -8,7 +8,7 @@
           <form method="post" enctype="multipart/form-data" id="creatediscussion">
             {% csrf_token %}
             {% for field in form %}
-              {%if field.name == "description" or field.name == "image" %}
+              {%if field.name == "description" or field.name == "file" %}
                 <div class="form mt-2 mb-2">
                     {{field}}
                 </div>

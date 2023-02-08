@@ -36,3 +36,10 @@ class Comments(models.Model):
 
     def __str__(self):
         return self.text_comment
+
+
+class Notification(models.Model):
+    notification = models.TextField(max_length=100)
+    create_time = models.DateTimeField(auto_now_add=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    url = models.URLField(null=True)

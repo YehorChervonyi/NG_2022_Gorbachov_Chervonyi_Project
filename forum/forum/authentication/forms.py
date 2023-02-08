@@ -42,7 +42,7 @@ class ThemeForm(ModelForm):
 class DiscussionForm(ModelForm):
     class Meta:
         model = Discussion
-        fields = ('name_discussion', 'description', 'theme', 'image')
+        fields = ('name_discussion', 'description', 'theme', 'file')
     def __init__(self, *args, **kwargs):
         super(DiscussionForm, self).__init__(*args, **kwargs)
 
@@ -55,8 +55,8 @@ class DiscussionForm(ModelForm):
         self.fields['description'].widget.attrs['rows'] = '10'
         self.fields['theme'].widget.attrs['class'] = 'form-control'
         self.fields['theme'].widget.attrs['placeholder'] = 'Theme'
-        self.fields['image'].widget.attrs['class'] = 'form-control'
-        self.fields['image'].widget.attrs['type'] = 'file'
+        self.fields['file'].widget.attrs['class'] = 'form-control'
+        self.fields['file'].widget.attrs['type'] = 'file'
 
 class CommentsForm(ModelForm):
     class Meta:

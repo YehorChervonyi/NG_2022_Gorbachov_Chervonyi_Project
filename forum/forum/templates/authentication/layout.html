@@ -68,9 +68,17 @@
               <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
               <button class="btn btn-outline-success me-md-3" type="submit">Search</button>
             </form>
+            <br>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end align-items-center">
               {% if user.is_authenticated%}
-                {{user.get_username }}
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{user.get_username }}
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-lg-end">
+                    <li><a href="{%url 'notifications'%}" class="dropdown-item" type="button"><i class="fa fa-bell" aria-hidden="true"></i> Notifications</a></li>
+                  </ul>
+                </div>
               {% if user.is_superuser %}
               <button onclick="window.location.href='/admin'" class="btn btn-primary" type="button"><i class="fa fa-cog" aria-hidden="true"></i></button>
               {% endif %}
@@ -94,6 +102,7 @@
     {% block body %}
 
     {% endblock %}
+    <!-- Pagination for discussions -->
     {%if discussions.paginator.num_pages > 1%}
     <nav>
       <ul class="pagination justify-content-center">
@@ -121,6 +130,41 @@
           </li>
           <li class="page-item">
               <a class="page-link" href="?pg={{discussions.paginator.num_pages}}" aria-label="Next">
+                  <span aria-hidden="true">Last &raquo;</span>
+              </a>
+          </li>
+          {%endif%}
+      </ul>
+    </nav>
+    {%endif%}
+    <!-- Pagination for notifications -->
+    {%if notifications.paginator.num_pages > 1%}
+    <nav>
+      <ul class="pagination justify-content-center">
+          {%if notifications.has_previous%}
+          <li class="page-item">
+              <a class="page-link" href="?pg=1" aria-label="Previous">
+                  <span aria-hidden="true">&laquo; First</span>
+              </a>
+          </li>
+          <li class="page-item">
+              <a class="page-link" href="?pg={{notifications.previous_page_number}}" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+              </a>
+          </li>
+          <li class="page-item"><a class="page-link" href="?pg={{notifications.previous_page_number}}">{{notifications.previous_page_number}}</a></li>
+          {%endif%}
+
+        <li class="page-item"><a class="page-link active"><sup>{{notifications.number}}</sup>/<sub>{{notifications.paginator.num_pages}}</sub> </a></li>
+        {%if notifications.has_next%}
+        <li class="page-item"><a class="page-link" href="?pg={{notifications.next_page_number}}">{{notifications.next_page_number}}</a></li>
+        <li class="page-item">
+            <a class="page-link" href="?pg={{notifications.next_page_number}}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+          </li>
+          <li class="page-item">
+              <a class="page-link" href="?pg={{notifications.paginator.num_pages}}" aria-label="Next">
                   <span aria-hidden="true">Last &raquo;</span>
               </a>
           </li>

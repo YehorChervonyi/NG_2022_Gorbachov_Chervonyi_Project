@@ -103,7 +103,7 @@ def create_theme(request):
                'themes': themes}
     return render(request, 'authentication/createtheme.html', context)
 
-
+@login_required(login_url='login')
 def create_discussion(request):
     themes = Theme.objects.all()
     form = DiscussionForm
@@ -126,8 +126,9 @@ def themepage(request, page):
     discussions = None
     for one_theme in themes:
         if str(one_theme) == str(page):
-            pag = Paginator(Discussion.objects.filter(theme=one_theme),5)
-            pg=request.GET.get('pg')
+            discussions_all = Discussion.objects.filter(theme=one_theme).order_by('create_time')
+            pag = Paginator(discussions_all.reverse(), 5)
+            pg = request.GET.get('pg')
             discussions = pag.get_page(pg)
     context = {
         'page': page,
@@ -136,7 +137,6 @@ def themepage(request, page):
     }
 
     return render(request, 'authentication/theme.html', context)
-
 
 
 def discussionpage(request, page, discussionid):
@@ -151,37 +151,41 @@ def discussionpage(request, page, discussionid):
             discusss = Discussion.objects.filter(id=onediscussion.id)
             comments = Comments.objects.filter(discussion=onediscussion)
             if request.method == "POST":
-                form = CommentsForm(request.POST)
-                if form.is_valid():
-                    comment = form.save(commit=False)
-                    comment.author_comment = current_user
-                    comment.discussion = Discussion.objects.filter(id=onediscussion.id)[0]
+                if User.is_authenticated == True:
 
-                    lst = (', ', ' ', ',', '.', '. ', '!', '! ',
-                           '?', '? ', ') ', ')', '( ', '(')
-                    text = comment.text_comment
-                    for word in text.split():
-                        for char in lst:
-                            if char in word[0]:
-                                break
-                            word = word.split(char)[0]
-                        if word[0] == "@":
-                            user = word[1:]
+                    form = CommentsForm(request.POST)
+                    if form.is_valid():
+                        comment = form.save(commit=False)
+                        comment.author_comment = current_user
+                        comment.discussion = Discussion.objects.filter(id=onediscussion.id)[0]
 
-                            try:
-                                userdb = User.objects.get(username=user)
-                                Notification.objects.create(owner=userdb,
-                                                            notification="You was mentioned in discussion",
-                                                            url="/"+page+"/"+discussionid)
-                            except:
-                                messages.warning(request, "User doesnt exist, write correct username")
-                                break
+                        lst = (', ', ' ', ',', '.', '. ', '!', '! ',
+                               '?', '? ', ') ', ')', '( ', '(')
+                        text = comment.text_comment
+                        for word in text.split():
+                            for char in lst:
+                                if char in word[0]:
+                                    break
+                                word = word.split(char)[0]
+                            if word[0] == "@":
+                                user = word[1:]
+
+                                try:
+                                    userdb = User.objects.get(username=user)
+                                    Notification.objects.create(owner=userdb,
+                                                                notification="You was mentioned in discussion",
+                                                                url="/"+page+"/"+discussionid)
+                                except:
+                                    messages.warning(request, "User doesnt exist, write correct username")
+                                    break
 
 
-                    comment.save()
-                    messages.success(request, "Thank you for comment")
-                    return HttpResponseRedirect('/'+page+'/'+discussionid)
-
+                        comment.save()
+                        messages.success(request, "Thank you for comment")
+                        return HttpResponseRedirect('/'+page+'/'+discussionid)
+                else:
+                    messages.warning(request, "You must be logged in")
+                    return redirect('login')
     context = {
         'page': page,
         'form': form,
@@ -192,6 +196,7 @@ def discussionpage(request, page, discussionid):
     }
     return render(request, 'authentication/discussion.html', context)
 
+@login_required(login_url='login')
 def notificationspage(request):
     themes = Theme.objects.all()
     current_user = request.user
@@ -202,7 +207,7 @@ def notificationspage(request):
     page = "Notifications"
     context = {
         'themes': themes,
-        'notifications':notifications,
+        'notifications': notifications,
         'page': page,
     }
     return render(request, 'authentication/notifications.html', context)

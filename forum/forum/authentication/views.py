@@ -143,6 +143,7 @@ def discussionpage(request, page, discussionid):
     themes = Theme.objects.all()
     form = CommentsForm
     current_user = request.user
+    print(current_user)
     discussions = Discussion.objects.all()
     discusss = None
     comments = None
@@ -151,41 +152,38 @@ def discussionpage(request, page, discussionid):
             discusss = Discussion.objects.filter(id=onediscussion.id)
             comments = Comments.objects.filter(discussion=onediscussion)
             if request.method == "POST":
-                if User.is_authenticated == True:
 
-                    form = CommentsForm(request.POST)
-                    if form.is_valid():
-                        comment = form.save(commit=False)
-                        comment.author_comment = current_user
-                        comment.discussion = Discussion.objects.filter(id=onediscussion.id)[0]
+                form = CommentsForm(request.POST)
+                if form.is_valid():
+                    comment = form.save(commit=False)
+                    comment.author_comment = current_user
+                    comment.discussion = Discussion.objects.filter(id=onediscussion.id)[0]
 
-                        lst = (', ', ' ', ',', '.', '. ', '!', '! ',
-                               '?', '? ', ') ', ')', '( ', '(')
-                        text = comment.text_comment
-                        for word in text.split():
-                            for char in lst:
-                                if char in word[0]:
-                                    break
-                                word = word.split(char)[0]
-                            if word[0] == "@":
-                                user = word[1:]
+                    lst = (', ', ' ', ',', '.', '. ', '!', '! ',
+                            '?', '? ', ') ', ')', '( ', '(')
+                    text = comment.text_comment
+                    for word in text.split():
+                        for char in lst:
+                            if char in word[0]:
+                                break
+                            word = word.split(char)[0]
+                        if word[0] == "@":
+                            user = word[1:]
 
-                                try:
-                                    userdb = User.objects.get(username=user)
-                                    Notification.objects.create(owner=userdb,
-                                                                notification="You was mentioned in discussion",
-                                                                url="/"+page+"/"+discussionid)
-                                except:
-                                    messages.warning(request, "User doesnt exist, write correct username")
-                                    break
+                            try:
+                                userdb = User.objects.get(username=user)
+                                Notification.objects.create(owner=userdb,
+                                                            notification="You was mentioned in discussion",
+                                                            url="/"+page+"/"+discussionid)
+                            except:
+                                messages.warning(request, "User doesnt exist, write correct username")
+                                break
 
 
-                        comment.save()
-                        messages.success(request, "Thank you for comment")
-                        return HttpResponseRedirect('/'+page+'/'+discussionid)
-                else:
-                    messages.warning(request, "You must be logged in")
-                    return redirect('login')
+                    comment.save()
+                    messages.success(request, "Thank you for comment")
+                    return HttpResponseRedirect('/'+page+'/'+discussionid)
+
     context = {
         'page': page,
         'form': form,

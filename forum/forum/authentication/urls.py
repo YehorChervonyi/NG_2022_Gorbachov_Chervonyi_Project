@@ -11,6 +11,7 @@ urlpatterns = [
     path('createtheme/', views.create_theme, name="createtheme"),
     path('creatediscussion/', views.create_discussion, name="creatediscussion"),
     path('notifications/', views.notificationspage, name="notifications"),
+    path('search/', views.search, name="search"),
     path('<str:page>/', views.themepage),
     path('<str:page>/<str:discussionid>/', views.discussionpage)
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

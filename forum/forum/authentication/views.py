@@ -213,7 +213,7 @@ def search(request):
     themes = Theme.objects.all()
     if request.method == "POST":
         searchfor = request.POST['searchfor']
-        page = "Search"
+        page = "Search | You search for: "+ searchfor
         discussions = Discussion.objects.filter(name_discussion__icontains=searchfor).order_by('create_time')
         context = {
             'discussions': discussions,

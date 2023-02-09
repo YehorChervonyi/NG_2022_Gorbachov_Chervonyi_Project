@@ -61,8 +61,9 @@
                 {{page}}
               </h5>
             </div>
-            <form class="d-flex" role="search">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <form class="d-flex" role="search" method="post" action="{% url 'search' %}">
+              {% csrf_token %}
+              <input class="form-control me-2" type="search" name="searchfor" placeholder="Search discussions"  aria-label="Search">
               <button class="btn btn-outline-success me-md-3" type="submit">Search</button>
             </form>
             <br>

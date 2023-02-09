@@ -76,7 +76,6 @@ def signup_user(request):
 
 
 def logout_user(request):
-    themes = Theme.objects.all()
     logout(request)
     messages.info(request, "You are logged out")
     return redirect('home')
@@ -209,3 +208,22 @@ def notificationspage(request):
         'page': page,
     }
     return render(request, 'authentication/notifications.html', context)
+
+def search(request):
+    themes = Theme.objects.all()
+    if request.method == "POST":
+        searchfor = request.POST['searchfor']
+        page = "Search"
+        discussions = Discussion.objects.filter(name_discussion__icontains=searchfor).order_by('create_time')
+        context = {
+            'discussions': discussions,
+            'themes': themes,
+            'page': page,
+        }
+        return render(request, 'authentication/search.html', context)
+    else:
+        page = "Wrong search"
+        context = {
+            'page': page,
+        }
+        return render(request, 'authentication/search.html', context)

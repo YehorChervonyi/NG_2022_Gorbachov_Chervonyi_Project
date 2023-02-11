@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
@@ -142,7 +143,6 @@ def discussionpage(request, page, discussionid):
     themes = Theme.objects.all()
     form = CommentsForm
     current_user = request.user
-    print(current_user)
     discussions = Discussion.objects.all()
     discusss = None
     comments = None
@@ -151,9 +151,9 @@ def discussionpage(request, page, discussionid):
             discusss = Discussion.objects.filter(id=onediscussion.id)
             comments = Comments.objects.filter(discussion=onediscussion)
             if request.method == "POST":
-
                 form = CommentsForm(request.POST)
                 if form.is_valid():
+                    discusss.update(update_time=timezone.now())
                     comment = form.save(commit=False)
                     comment.author_comment = current_user
                     comment.discussion = Discussion.objects.filter(id=onediscussion.id)[0]

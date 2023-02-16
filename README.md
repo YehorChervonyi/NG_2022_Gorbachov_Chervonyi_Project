@@ -24,5 +24,6 @@
 - Notification of mention in comments  :heavy_check_mark:
 - Pagination  :heavy_check_mark:
 - Search  :heavy_check_mark:
+- Register confirmation by email  :heavy_check_mark:
 
 

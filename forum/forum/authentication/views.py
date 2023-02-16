@@ -2,6 +2,13 @@ from django.utils import timezone
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
+from django.core.mail import EmailMessage
+from django.contrib.sites.shortcuts import get_current_site
+from django.contrib.auth import get_user_model
+from . token import account_activation_token
 from . forms import RegisterUserForm, User, ThemeForm, DiscussionForm, CommentsForm
 from . models import Theme, Discussion, Comments, Notification
 from django.contrib.auth.decorators import login_required, permission_required
@@ -66,8 +73,10 @@ def signup_user(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.email = user.email.lower()
+            user.is_active = False
             user.save()
-            messages.success(request, "Registration successful")
+            acc_activate_email(request, user, form.cleaned_data.get('email'))
+            # messages.success(request, "Registration successful")
             return redirect('login')
 
     context = {
@@ -75,6 +84,36 @@ def signup_user(request):
         'themes':themes}
     return render(request, 'authentication/signup.html', context)
 
+def acc_activate_email(request, user, emailto):
+    mail_subject = 'Activate your user account.'
+    message = render_to_string('authentication/accactivateemail.html', {
+        'user': user.username,
+        'domain': get_current_site(request).domain,
+        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+        'token': account_activation_token.make_token(user),
+        'protocol': 'https' if request.is_secure() else 'http'
+    })
+    email = EmailMessage(mail_subject, message, to=[emailto])
+    if email.send():
+        messages.success(request, f"{user} check your email {emailto} inbox to confirm the registration")
+    else:
+        messages.warning(request, f'Problem sending confirmation email to {emailto}, check form fields.')
+
+def activate(request, uidb64, token):
+    user = get_user_model()
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None:
+        user.is_active = True
+        user.save()
+        messages.success(request, 'Thank you for your email confirmation. Now you can login your account.')
+        return redirect('login')
+    else:
+        messages.warning(request, 'Activation link is invalid!')
+    return redirect('login')
 
 def logout_user(request):
     logout(request)

@@ -153,7 +153,7 @@ def create_discussion(request):
             discussion = form.save(commit=False)
             discussion.author_discussion = current_user
             discussion.save()
-            messages.success(request, "Discussion created. We believe you wil enjoy")
+            messages.success(request, "Discussion created")
             return redirect('home')
     context = {'form': form,
                'themes': themes,

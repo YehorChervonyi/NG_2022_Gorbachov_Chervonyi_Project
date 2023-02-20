@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 from pathlib import Path
-import os
+import os, datetime
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -110,6 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Kyiv'
 
 USE_I18N = True
 
@@ -134,9 +135,9 @@ STATICFILES_DIRS =[
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_FROM = 'youremail@mail.domain'
-EMAIL_HOST_USER = 'youremail@mail.domain'
-EMAIL_HOST_PASSWORD = 'yourpass'
+EMAIL_FROM = 'ferrettestmail@gmail.com'
+EMAIL_HOST_USER = 'ferrettestmail@gmail.com'
+EMAIL_HOST_PASSWORD = 'aqooiqwkljbijknb'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
